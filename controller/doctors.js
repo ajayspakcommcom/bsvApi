@@ -116,6 +116,7 @@ function addBrandDetails(objParam) {
                     .input("NoOfStrips", sql.Int, objParam.NoOfStrips)
                     .input("NoOfPatients", sql.Int, objParam.NoOfPatients)
                     .input("papValue", sql.Int, objParam.papValue)
+                    .input("indication", sql.NVarChar, objParam.indication)
                     .execute('USP_HAEMAT_ADD_ORDER_DETAILS')
                     .then(function (resp) {
                         //console.log(resp)
