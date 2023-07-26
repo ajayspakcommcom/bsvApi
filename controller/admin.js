@@ -173,7 +173,7 @@ exports.sendMail = (req, res, next) => {
 
                 const mailOptions = {
                     from: 'ajay@spakcomm.com',
-                    to: 'ajay@spakcomm.com, shiv@spakcomm.com,',
+                    to: 'ajay@spakcomm.com, shiv@spakcomm.com, Tamhane@bsvgroup.com, Priyanka.Chauhan@bsvgroup.com, yash.suthar@bsvgroup.com',
                     subject: 'Haemat P2C Report',
                     html: `<b>Haemat P2C Report</b>`,
                     attachments: [{
