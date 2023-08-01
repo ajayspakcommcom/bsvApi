@@ -115,7 +115,7 @@ exports.sendMail = (req, res, next) => {
 
                             if (oncycloMed && revugamMed && thymogamMed) {
                                 if ((parseInt(oncycloMed?.NoOfStrips) > 0) && (parseInt(revugamMed?.NoOfStrips)) && (parseInt(thymogamMed?.NoOfVials))) {
-                                    isTdr = true;
+                                    isTdr = true
                                 }
                             }
                         }
