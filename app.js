@@ -38,7 +38,7 @@ app.use(personRoute);
 
 app.listen(process.env.PORT || 3333, () => {
     console.clear();
-    console.log("Application listening on port 3333!");
+    console.log("Application listening on port 3333!")
 });
 
 
