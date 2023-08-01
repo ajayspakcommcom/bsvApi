@@ -104,13 +104,30 @@ exports.sendMail = (req, res, next) => {
 
                 for (const item of groupedRawFilteredDataByDate) {
                     for (const key in item) {
-                        tdrData.push({
-                            'EmployeeName': item[key][0].EmployeeName,
-                            'drName': item[key][0].DoctorsName,
-                            'noOfPatients': item[key][0].NoOfPatients,
-                            'tdr': item[key].length === 3 ? 'Yes' : 'No',
-                            'date': new Date(item[key][0].CreatedDate).toLocaleDateString()
-                        });
+
+                        let isTdr = false;
+
+                        if (item[key].length === 3) {
+                            let oncycloMed = item[key].find(item => item.medID === 35);
+                            let revugamMed = item[key].find(item => item.medID === 36);
+                            let thymogamMed = item[key].find(item => item.medID === 37);
+
+                            if (oncycloMed && revugamMed && thymogamMed) {
+                                if ((parseInt(oncycloMed?.NoOfStrips) > 0) && (parseInt(revugamMed?.NoOfStrips)) && (parseInt(thymogamMed?.NoOfVials))) {
+                                    isTdr = true;
+                                }
+                            }
+                        }
+
+                        if (isTdr) {
+                            tdrData.push({
+                                'EmployeeName': item[key][0].EmployeeName,
+                                'drName': item[key][0].DoctorsName,
+                                'noOfPatients': item[key][0].NoOfPatients,
+                                'tdr': item[key].length === 3 ? 'Yes' : 'No',
+                                'date': new Date(item[key][0].CreatedDate).toLocaleDateString()
+                            });
+                        }
                     }
                 }
 
@@ -173,7 +190,7 @@ exports.sendMail = (req, res, next) => {
 
                 const mailOptions = {
                     from: 'ajay@spakcomm.com',
-                    to: 'ajay@spakcomm.com, shiv@spakcomm.com, Tamhane@bsvgroup.com, Priyanka.Chauhan@bsvgroup.com, yash.suthar@bsvgroup.com',
+                    to: 'ajay@spakcomm.com, shiv@spakcomm.com, manali.tamhane@bsvgroup.com, Priyanka.Chauhan@bsvgroup.com, yash.suthar@bsvgroup.com',
                     subject: 'Haemat P2C Report',
                     html: `<b>Haemat P2C Report</b>`,
                     attachments: [{
