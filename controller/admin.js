@@ -42,10 +42,9 @@ exports.sendMail = (req, res, next) => {
 
     //const reportData = [];
 
-    cron.schedule('* * * * *', () => {
+    cron.schedule('0 8 * * *', () => {
         //0 8 * * *
-        //https://cron.help/#8_16_*_*_*
-        console.log('Ram');
+        //https://cron.help/#8_16_*_*_*        
         const dbConn = new sql.ConnectionPool(dbConfig.dataBaseConfig);
         dbConn.connect().then(function () {
             const request = new sql.Request(dbConn);
