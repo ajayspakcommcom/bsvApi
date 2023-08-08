@@ -42,7 +42,7 @@ exports.sendMail = (req, res, next) => {
 
     //const reportData = [];
 
-    cron.schedule('0 8 * * *', () => {
+    cron.schedule('5 8 * * *', () => {
         //0 8 * * *
         //https://cron.help/#8_16_*_*_*    
         console.log('Ram Ram..');
