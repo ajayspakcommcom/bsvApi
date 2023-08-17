@@ -22,9 +22,39 @@ function getAdminReport(objParam) {
             .then(function () {
                 var request = new sql.Request(dbConn);
                 request
+                    .execute('USP_HAEMAT_ADMIN_REPORT')
+                    .then(function (resp) {
+                        resolve(resp.recordsets);
+                        dbConn.close();
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        dbConn.close();
+                    });
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    });
+};
+
+exports.filterAdminReport = (req, res, next) => {
+    filterAdminReport(req.body).then((result) => {
+        res.status(_STATUSCODE).json(result);
+    });
+};
+
+function filterAdminReport(objParam) {
+    return new Promise((resolve) => {
+        var dbConn = new sql.ConnectionPool(dbConfig.dataBaseConfig);
+        dbConn
+            .connect()
+            .then(function () {
+                var request = new sql.Request(dbConn);
+                request
                     .input("EmpId", sql.Int, objParam.empId)
                     .input("StartDate", sql.Date, objParam.startDate)
-                    .input("EndDate", sql.Int, objParam.endDate)
+                    .input("EndDate", sql.Date, objParam.endDate)
                     .execute('USP_HAEMAT_ADMIN_REPORT')
                     .then(function (resp) {
                         resolve(resp.recordsets);
