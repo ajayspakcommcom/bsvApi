@@ -22,6 +22,9 @@ function getAdminReport(objParam) {
             .then(function () {
                 var request = new sql.Request(dbConn);
                 request
+                    .input("EmpId", sql.Int, objParam.empId)
+                    .input("StartDate", sql.Date, objParam.startDate)
+                    .input("EndDate", sql.Int, objParam.endDate)
                     .execute('USP_HAEMAT_ADMIN_REPORT')
                     .then(function (resp) {
                         resolve(resp.recordsets);
