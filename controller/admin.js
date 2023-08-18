@@ -92,19 +92,19 @@ exports.sendMail = (req, res, next) => {
                         "DoctorsName": item.DoctorsName[0],
                         "Speciality": item.Speciality[0],
                         "HospitalName": item.HospitalName[0],
-                        "Indication": item.Indication ? getIndicationText(item.Indication[0]) : '-NA-', //getIndicationText(item.Indication),
+                        "Indication": item.Indication ? getIndicationText(item.Indication[0]) : 0, //getIndicationText(item.Indication),
 
-                        "ThymogamNoOfPatients": item.medID === 37 ? item.NoOfPatients : '-NA-',
-                        "RevugamNoOfPatients": (item.medID === 36 || item.medID === 38) ? item.NoOfPatients : '-NA-',
-                        "OncycloNoOfPatients": item.medID === 35 ? item.NoOfPatients : '-NA-',
+                        "ThymogamNoOfPatients": item.medID === 37 ? item.NoOfPatients : 0,
+                        "RevugamNoOfPatients": (item.medID === 36 || item.medID === 38) ? item.NoOfPatients : 0,
+                        "OncycloNoOfPatients": item.medID === 35 ? item.NoOfPatients : 0,
 
-                        "ThymogamVials": item.medID === 37 ? item.NoOfVials : '-NA-',
-                        "RevugamStrips": (item.medID === 36 || item.medID === 38) ? item.strips : '-NA-',
-                        "OncycloStrips": item.medID === 35 ? item.strips : '-NA-',
+                        "ThymogamVials": item.medID === 37 ? item.NoOfVials : 0,
+                        "RevugamStrips": (item.medID === 36 || item.medID === 38) ? item.strips : 0,
+                        "OncycloStrips": item.medID === 35 ? item.strips : 0,
 
-                        "ThymogamPap": item.medID === 37 ? item.PapValue : '-NA-',
-                        "RevugamPap": (item.medID === 36 || item.medID === 38) ? item.PapValue : '-NA-',
-                        "OncycloPap": item.medID === 35 ? item.PapValue : '-NA-',
+                        "ThymogamPap": item.medID === 37 ? item.PapValue : 0,
+                        "RevugamPap": (item.medID === 36 || item.medID === 38) ? item.PapValue : 0,
+                        "OncycloPap": item.medID === 35 ? item.PapValue : 0,
                     };
                 });
 
