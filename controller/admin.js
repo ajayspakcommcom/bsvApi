@@ -55,9 +55,6 @@ function filterAdminReport(objParam) {
                 let startDate = new Date(objParam.startDate);
                 let endDate = new Date(objParam.endDate);
 
-                console.log(startDate);
-                console.log(endDate);
-
                 request
                     .input("EmpId", sql.Int, objParam.empId)
                     .input("StartDate", sql.Date, startDate)
