@@ -51,10 +51,17 @@ function filterAdminReport(objParam) {
             .connect()
             .then(function () {
                 var request = new sql.Request(dbConn);
+
+                let startDate = new Date(objParam.startDate);
+                let endDate = new Date(objParam.endDate);
+
+                console.log(startDate);
+                console.log(endDate);
+
                 request
                     .input("EmpId", sql.Int, objParam.empId)
-                    .input("StartDate", sql.Date, objParam.startDate)
-                    .input("EndDate", sql.Date, objParam.endDate)
+                    .input("StartDate", sql.Date, startDate)
+                    .input("EndDate", sql.Date, endDate)
                     .execute('USP_HAEMAT_ADMIN_REPORT')
                     .then(function (resp) {
                         resolve(resp.recordsets);
