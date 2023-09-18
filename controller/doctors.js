@@ -120,7 +120,7 @@ function addBrandDetails(objParam) {
                     .input("EntryID", sql.NVarChar, objParam.EntryID)
                     .execute('USP_HAEMAT_ADD_ORDER_DETAILS')
                     .then(function (resp) {
-                        //console.log(resp)
+                        console.log(resp)
                         resolve(resp.recordsets);
                         dbConn.close();
                     })
