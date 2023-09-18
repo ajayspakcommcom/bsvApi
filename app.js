@@ -28,11 +28,13 @@ app.use(cors({
 const authRoute = require('./routes/auth');
 const doctorsRoute = require('./routes/doctors');
 const adminRoute = require('./routes/admin');
+const adminRoute1 = require('./routes/admin1');
 const personRoute = require('./routes/personRoute');
 
 app.use(authRoute);
 app.use(doctorsRoute);
 app.use(adminRoute);
+app.use(adminRoute1);
 app.use(personRoute);
 
 
