@@ -47,6 +47,46 @@ exports.getAdminTdr = (req, res, next) => {
     });
 };
 
+exports.filterAdminReport = (req, res, next) => {
+    filterAdminReport(req.body).then((result) => {
+        res.status(_STATUSCODE).json(result);
+    });
+};
+
+function filterAdminReport(objParam) {
+    return new Promise((resolve) => {
+        var dbConn = new sql.ConnectionPool(dbConfig.dataBaseConfig);
+        dbConn
+            .connect()
+            .then(function () {
+                var request = new sql.Request(dbConn);
+
+                const stDate = new Date(objParam.startDate).setDate(new Date(objParam.startDate).getDate() + 0);
+                const enDate = new Date(objParam.endDate).setDate(new Date(objParam.endDate).getDate() + 0);
+
+                let startDate = new Date(stDate);
+                let endDate = new Date(enDate);
+
+                request
+                    .input("EmpId", sql.Int, objParam.empId === null ? null : objParam.empId)
+                    .input("StartDate", sql.Date, objParam.startDate === null ? null : startDate)
+                    .input("EndDate", sql.Date, objParam.endDate === null ? null : endDate)
+                    .execute('spMedicineUsageSummary')
+                    .then(function (resp) {
+                        resolve(resp.recordsets);
+                        dbConn.close();
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        dbConn.close();
+                    });
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    });
+};
+
 function getAdminTdr(objParam) {
     return new Promise((resolve) => {
         var dbConn = new sql.ConnectionPool(dbConfig.dataBaseConfig);
