@@ -6,7 +6,8 @@ const controller = require('../controller/admin1');
 router.get('/admin-report1', controller.getAdminReport);
 router.get('/admin-report-tdr', controller.getAdminTdr);
 
-router.post('/admin-report1', controller.filterAdminReport);
+router.post('/admin-report1-filter', controller.filterAdminReport);
+router.post('/admin-report-tdr1-filter', controller.getAdminTdrFilter);
 
 module.exports = router;
 

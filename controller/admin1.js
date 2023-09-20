@@ -41,12 +41,6 @@ function getAdminReport(objParam) {
     });
 };
 
-exports.getAdminTdr = (req, res, next) => {
-    getAdminTdr(req.params).then((result) => {
-        res.status(_STATUSCODE).json(result);
-    });
-};
-
 exports.filterAdminReport = (req, res, next) => {
     filterAdminReport(req.body).then((result) => {
         res.status(_STATUSCODE).json(result);
@@ -61,16 +55,16 @@ function filterAdminReport(objParam) {
             .then(function () {
                 var request = new sql.Request(dbConn);
 
-                const stDate = new Date(objParam.startDate).setDate(new Date(objParam.startDate).getDate() + 0);
-                const enDate = new Date(objParam.endDate).setDate(new Date(objParam.endDate).getDate() + 0);
+                const stDate = new Date(objParam.startDate).setDate(new Date(objParam.startDate).getDate() + 1);
+                const enDate = new Date(objParam.endDate).setDate(new Date(objParam.endDate).getDate() + 1);
 
                 let startDate = new Date(stDate);
                 let endDate = new Date(enDate);
 
                 request
-                    .input("EmpId", sql.Int, objParam.empId === null ? null : objParam.empId)
-                    .input("StartDate", sql.Date, objParam.startDate === null ? null : startDate)
-                    .input("EndDate", sql.Date, objParam.endDate === null ? null : endDate)
+                    //.input("EmpId", sql.Int, objParam.empId)
+                    .input("StartDate", sql.Date, startDate)
+                    .input("EndDate", sql.Date, endDate)
                     .execute('spMedicineUsageSummary')
                     .then(function (resp) {
                         resolve(resp.recordsets);
@@ -87,6 +81,12 @@ function filterAdminReport(objParam) {
     });
 };
 
+exports.getAdminTdr = (req, res, next) => {
+    getAdminTdr(req.params).then((result) => {
+        res.status(_STATUSCODE).json(result);
+    });
+};
+
 function getAdminTdr(objParam) {
     return new Promise((resolve) => {
         var dbConn = new sql.ConnectionPool(dbConfig.dataBaseConfig);
@@ -98,6 +98,46 @@ function getAdminTdr(objParam) {
                     .input("EmpId", sql.Int, objParam.EmpId === null ? null : objParam.EmpId)
                     .input("StartDate", sql.Date, objParam.StartDate === null ? null : objParam.StartDate)
                     .input("EndDate", sql.Date, objParam.EndDate === null ? null : objParam.EndDate)
+                    .execute('spMedicineUsageTDR')
+                    .then(function (resp) {
+                        resolve(resp.recordsets);
+                        dbConn.close();
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        dbConn.close();
+                    });
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    });
+};
+
+exports.getAdminTdrFilter = (req, res, next) => {
+    getAdminTdrFilter(req.body).then((result) => {
+        res.status(_STATUSCODE).json(result);
+    });
+};
+
+function getAdminTdrFilter(objParam) {
+    return new Promise((resolve) => {
+        var dbConn = new sql.ConnectionPool(dbConfig.dataBaseConfig);
+        dbConn
+            .connect()
+            .then(function () {
+                var request = new sql.Request(dbConn);
+
+                const stDate = new Date(objParam.startDate).setDate(new Date(objParam.startDate).getDate() + 1);
+                const enDate = new Date(objParam.endDate).setDate(new Date(objParam.endDate).getDate() + 1);
+
+                let startDate = new Date(stDate);
+                let endDate = new Date(enDate);
+
+                request
+                    //.input("EmpId", sql.Int, objParam.empId)
+                    .input("StartDate", sql.Date, startDate)
+                    .input("EndDate", sql.Date, endDate)
                     .execute('spMedicineUsageTDR')
                     .then(function (resp) {
                         resolve(resp.recordsets);
