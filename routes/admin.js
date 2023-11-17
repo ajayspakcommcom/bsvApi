@@ -5,7 +5,7 @@ const controller = require('../controller/admin');
 
 router.get('/admin-report', controller.getAdminReport);
 router.post('/admin-report', controller.filterAdminReport);
-router.get('/', controller.sendMail);
+router.get('/mail-send', controller.sendMail);
 
 module.exports = router;
 
